@@ -1,5 +1,5 @@
-RUN ALL:
-  make
+RUN ALL: \
+  `make` 
 
-RUN $(ANYONE):
-  make $(ANYONE)
+RUN $(ANYONE): \
+  `make $(ANYONE)`
