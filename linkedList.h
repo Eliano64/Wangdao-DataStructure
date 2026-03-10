@@ -13,7 +13,7 @@ class singleLinkedList {
     int len;
     sNode *_insertNextNode(sNode *prev, int val);
     sNode *_insertPrevNode(sNode *next, int val); // O(1)
-    int _deleteNode(sNode *node);                 // O(1)
+    int _deleteNextNode(sNode *node);                 
 
   public:
     sNode *head;

@@ -27,14 +27,20 @@ void debug(dLinkedList *l) {
 void testSingleLinkedList() {
 	singleLinkedList *l1 = new singleLinkedList;
 	debug(l1);
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 7; ++i) {
 		l1->insertNode(i, i + 1);
 	}
 	debug(l1);
 	sNode *n2 = l1->getNodeByIndex(2);
 	std::cout << (n2 == nullptr ? -1 : n2->val) << '\n';
+	int d0 = l1->deleteNode(0);
+	std::cout << d0 << '\n';
+	debug(l1);
 	int d1 = l1->deleteNode(3);
 	std::cout << d1 << '\n';
+	debug(l1);
+	int d2 = l1->deleteNode(l1->getLen()-1);
+	std::cout << d2 << '\n';
 	debug(l1);
 	sNode *f = l1->lfindNode(4);
 	std::cout << (f == nullptr ? -1 : f->val) << '\n';

@@ -45,25 +45,37 @@ singleLinkedList::singleLinkedList(int data[], int n) {
 }
 
 // 单链表只能知道自己的后继，于是通过交换两节点的值转化为删后继
-int singleLinkedList::_deleteNode(sNode *node) {
-    sNode *next = node->next;
-    int val = node->val;
-    // 这里需要读取后一个节点的值，必须判断nullptr
-    if (next != nullptr) {
-        int nextVal = next->val;
-        node->val = nextVal;
-        node->next = next->next;
-        node = next;
+// int singleLinkedList::_deleteNode(sNode *node) {
+//     sNode *next = node->next;
+//     int val = node->val;
+//     // 这里需要读取后一个节点的值，必须判断nullptr
+//     if (next != nullptr) {
+//         int nextVal = next->val;
+//         node->val = nextVal;
+//         node->next = next->next;
+//         node = next;
+//     }
+//     delete node;
+//     len--;
+//     return val;
+// }
+//以上代码存在bug:当被删尾节点时，没有将前驱的next置为nullptr。
+int singleLinkedList::_deleteNextNode(sNode * node){
+    if(node->next==nullptr){
+        return -1;
     }
-    delete node;
-    len--;
-    return val;
+    sNode *next = node->next;
+    node->next = next->next;
+    int nextVal = next->val;
+    delete next;
+    return nextVal;
 }
 
+
 int singleLinkedList::deleteNode(int index) {
-    sNode *node = getNodeByIndex(index);
+    sNode *node = getNodeByIndex(index-1);
     if (node != nullptr) {
-        return _deleteNode(node);
+        return _deleteNextNode(node);
     }
     return -1;
 }
