@@ -1,16 +1,16 @@
-#include "./utils.h"
 #include "./kmp.h"
-#include <cstring>
-#include <unordered_map>
-#include <cstdlib>
-#include <new>
+#include "./utils.h"
 #include <cstddef>
+#include <cstdlib>
+#include <cstring>
+#include <new>
+#include <unordered_map>
 
-//static bool g_log_next = false;
-static std::unordered_map<void*, int> sizeRecord;
+// static bool g_log_next = false;
+static std::unordered_map<void *, int> sizeRecord;
 
-void* operator new[](std::size_t size) {
-    void* p = std::malloc(size);
+void *operator new[](std::size_t size) {
+    void *p = std::malloc(size);
     if (p == nullptr) {
         throw std::bad_alloc();
     }
@@ -18,26 +18,24 @@ void* operator new[](std::size_t size) {
     return p;
 }
 
-void operator delete[](void* p) noexcept {
+void operator delete[](void *p) noexcept {
     if (p == nullptr) {
         return;
     }
     int size = sizeRecord[p];
     if (size != 0) {
         sizeRecord.erase(p);
-		std::cout<<"next: ";
-		int * arr = static_cast<int*>(p);
-		for(long unsigned int i=0;i<size/sizeof(arr[0]);++i){
-			std::cout<<arr[i]<<" ";
-		}
-		std::cout<<"\n";
+        std::cout << "next: ";
+        int *arr = static_cast<int *>(p);
+        for (long unsigned int i = 0; i < size / sizeof(arr[0]); ++i) {
+            std::cout << arr[i] << " ";
+        }
+        std::cout << "\n";
     }
     std::free(p);
 }
 
-void operator delete[](void* p, std::size_t) noexcept {
-    operator delete[](p);
-}
+void operator delete[](void *p, std::size_t) noexcept { operator delete[](p); }
 
 void debug(char a[], char b[], int x) {
     std::cout << a << "\n";
@@ -60,24 +58,22 @@ struct Case {
 };
 
 void test() {
-    Case cases[] = {
-        {"", "", 0},
-        {"abc", "", 0},
-        {"", "a", -1},
-        {"hello, world!", "world", 7},
-        {"a b c d", "b c", 2},
-        {"version2.0.1", "2.0", 7},
-        {"abc123xyz", "123", 3},
-        {"Needle in a haystack.", "hay", 12},
-        {"No-match case", "xyz", -1},
-        {"repeat repeat", "peat", 2},
-        {"!@#$%^&*()", "^&*", 5},
-        {"A quick brown fox", "quick", 2},
-        {"aaaaab", "aaab", 2},
-        {"edge-case: end", "end", 11},
-        {"space  and  tabs?", "  ", 5},
-		{"googoegooglegoogoo","googoo",12}
-    };
+    Case cases[] = {{"", "", 0},
+                    {"abc", "", 0},
+                    {"", "a", -1},
+                    {"hello, world!", "world", 7},
+                    {"a b c d", "b c", 2},
+                    {"version2.0.1", "2.0", 7},
+                    {"abc123xyz", "123", 3},
+                    {"Needle in a haystack.", "hay", 12},
+                    {"No-match case", "xyz", -1},
+                    {"repeat repeat", "peat", 2},
+                    {"!@#$%^&*()", "^&*", 5},
+                    {"A quick brown fox", "quick", 2},
+                    {"aaaaab", "aaab", 2},
+                    {"edge-case: end", "end", 11},
+                    {"space  and  tabs?", "  ", 5},
+                    {"googoegooglegoogoo", "googoo", 12}};
 
     int pass = 0;
     int total = static_cast<int>(sizeof(cases) / sizeof(cases[0]));
@@ -95,7 +91,8 @@ void test() {
         bool ok = ans == cases[i].expected;
         std::cout << (ok ? "[PASS] " : "[FAIL] ");
         std::cout << "a=\"" << a << "\", b=\"" << b << "\"";
-        std::cout << ", got=" << ans << ", expected=" << cases[i].expected << "\n";
+        std::cout << ", got=" << ans << ", expected=" << cases[i].expected
+                  << "\n";
         debug(a, b, ans);
         if (ok) {
             ++pass;
@@ -103,4 +100,3 @@ void test() {
     }
     std::cout << "[SUMMARY] " << pass << "/" << total << " passed\n";
 }
-
