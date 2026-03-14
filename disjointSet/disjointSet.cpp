@@ -18,7 +18,10 @@ int disjointSet::find(int n) {
 int disjointSet::unionSet(int p, int n) {
     int p0 = find(p);
     int n0 = find(n);
-    if (-p0 >= -n0) {
+	if(p0 == n0){
+		return p0;
+	}
+    if (-parent[p0] >= -parent[n0]) {
         parent[p0] += parent[n0];
         parent[n0] = p0;
         return p0;
