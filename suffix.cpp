@@ -1,5 +1,4 @@
 #include "suffix.h"
-#include "iostream"
 
 static std::unordered_map<char, std::function<int(int, int)>> operatorMap = {
     {'+', [](int a, int b) { return a + b; }},
@@ -84,7 +83,6 @@ suffix::suffix(std::string expr) {
                     if (num3 == -1) {
                         return;
                     }
-                    std::cout << num3 << ' ';
                     num->push(num3);
                 }
             }
