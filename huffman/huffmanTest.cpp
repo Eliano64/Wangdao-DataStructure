@@ -1,5 +1,5 @@
 #include "./huffman.h"
-#include "./utils.h"
+#include "../utils.h"
 
 static bool runCase(int data[], int len, int expected) {
 	std::cout<<"[before data]: ";

@@ -1,4 +1,4 @@
-#include "./utils.h"
+#include "../utils.h"
 #include "./suffix.h"
 #include <vector>
 

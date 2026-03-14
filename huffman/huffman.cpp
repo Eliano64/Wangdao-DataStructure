@@ -1,5 +1,5 @@
 #include "./huffman.h"
-#include "huffman.h"
+#include "../utils.h"
 #include <algorithm>
 
 huffmanTree::huffmanTree(int a[], int len) {

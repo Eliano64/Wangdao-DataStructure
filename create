@@ -1,14 +1,19 @@
 #!/bin/bash
-if [ ! -f "$1.h" ] || [ ! -f "$1.cpp" ] || [ ! -f "$1Test.cpp" ]; then
-	echo "#ifndef $1_H" >> $1.h
-	echo "#define $1_H" >> $1.h
-	echo "" >> $1.h
-	echo "" >> $1.h
-	echo "" >> $1.h
-	echo "#endif" >> $1.h
-	echo "#include \"./$1.h\"" >> $1.cpp
-	echo "#include \"./$1.h\"" >> $1Test.cpp
-	echo "#include \"./utils.h\"" >> $1Test.cpp
+if [ $# -ne 1 ]; then
+	echo "Usage: $0 <newModuleName>"
+	exit 1
+fi
+if [ ! -d "$1" ]; then
+	mkdir $1
+	echo "#ifndef $1_H" >> $1/$1.h
+	echo "#define $1_H" >> $1/$1.h
+	echo "" >> $1/$1.h
+	echo "" >> $1/$1.h
+	echo "" >> $1/$1.h
+	echo "#endif" >> $1/$1.h
+	echo "#include \"./$1.h\"" >> $1/$1.cpp
+	echo "#include \"./$1.h\"" >> $1/$1Test.cpp
+	echo "#include \"../utils.h\"" >> $1/$1Test.cpp
 else
 	exit 0
 fi

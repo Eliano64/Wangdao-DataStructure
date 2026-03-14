@@ -1,17 +1,17 @@
-HEADERS := $(filter-out utils,$(basename $(wildcard *.h)))
+HEADERS := $(patsubst %/,%,$(wildcard */))
 CXXFLAGS := -O2 -Wall -Wextra -fsanitize=address -fsanitize=undefined -fstack-protector-all -ggdb
 all : clean $(HEADERS) 
 
 $(HEADERS): %: %Test.out
 	@echo "Test $*..."
-	-rm $*.out
-	./$<
+	cd $* && ./$<
 
-%Test.out : main.cpp %.h %Test.cpp %.cpp
-	g++ $(CXXFLAGS) -DHEADER=\"$*.h\" -o $@ main.cpp $*Test.cpp $*.cpp
+%Test.out : main.cpp
+	-rm $*/$*Test.out
+	cd $* && g++ $(CXXFLAGS) -DHEADER=\"$*/$*.h\" -o $@ ../main.cpp $*Test.cpp $*.cpp
 
 
 clean : 
-	-rm *.out
+	-rm -rf */*.out
 
 .PHONY: $(HEADERS) clean all
