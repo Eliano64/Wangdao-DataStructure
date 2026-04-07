@@ -1,5 +1,4 @@
 #include "./search.h"
-#include "search.h"
 
 /// @brief
 /// 为了简便,idxs有序且每一个元素必然在原数组的每一段里且为该段最大值；原数组段内无序但段内元素的最大值单增有序。
